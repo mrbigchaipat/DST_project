@@ -1,0 +1,18 @@
+<script src="https://d3js.org/d3.v5.min.js"></script>
+
+<h1>Dashboard#index</h1>
+<p>Find me in app/views/dashboard/index.html.erb</p>
+<p>
+  Number of potential customer:<br>
+  <%= @numberOfPotentialCust %>
+</p>
+
+<p>
+  Number of all customer:<br>
+  <%= @numberOfAllCust %>
+</p>
+
+
+
+<%= column_chart @data %>
+<%= pie_chart @correctPredictNoWithLowConf %>

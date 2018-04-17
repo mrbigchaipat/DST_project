@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  get 'nn/result'
+
+  get 'dt/result'
+
+  get 'svm/result'
+
+  get 'lr/result'
+
   devise_for :users
   get 'dashboard/index'
   root 'dashboard#index'

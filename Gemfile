@@ -6,6 +6,8 @@ git_source(:github) do |repo_name|
 end
 
 gem 'chartkick'
+gem 'highcharts-rails'
+gem 'jquery-rails'
 
 gem 'devise'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

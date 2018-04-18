@@ -1,82 +1,125 @@
-<script src="https://d3js.org/d3.v5.min.js"></script>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="navbar-header">
-    <a class="navbar-brand" href="#">DST Project</a>
-  </div>
-  <ul class="navbar-nav mr-auto">
-    <li class="nav-item active"><%= link_to 'Data Overview', dashboard_index_path, :method => :get, class: "nav-link" %></li>
-    <li><%= link_to 'Potential Customer', dashboard_logistic_regression_path, :method => :get, class: "nav-link" %></li>
-    <li><%= link_to 'Non Potential Customer', dashboard_non_potential_path, :method => :get, class: "nav-link" %></li>
-    <li><%= link_to 'Logistic Regression', lr_result_path, :method => :get, class: "nav-link" %></li>
-    <li><%= link_to 'Support Vector Machine', svm_result_path, :method => :get, class: "nav-link" %></li>
-    <li><%= link_to 'Decision Tree', dt_result_path, :method => :get, class: "nav-link" %></li>
-    <li><%= link_to 'Neural Network', nn_result_path, :method => :get, class: "nav-link" %></li>
-  </ul>
-</nav>
-
-<!--<div class="jumbotron">
-  <h1>Data Set Information:</h1>
-  <p>The data is related with direct marketing campaigns of a Portuguese banking institution.
-    The marketing campaigns were based on phone calls. Often, more than one contact to the same client was required,
-    in order to access if the product (bank term deposit) would be ('yes') or not ('no') subscribed. </p>
-</div>
--->
 
 
-<script type="text/javascript">
-    var data = <%= @ageData.to_s %>;
-    console.log(data)
-    /*var chart2 = Chartkick.charts["cs"];
-    console.log(data);
+<p>
+  Number of potential customer:<br>
+  <%= @numberOfPotentialCust %>
+</p>
 
-    function houseToContact() {
-        var chart = Chartkick.charts["hs"];
-        var chart2 = Chartkick.charts["cs"];
-        var x = [["no", 500], ["unknown", 990], ["yes", 21576]];
-        console.log(chart.getData());
-        chart.updateData(x);
-    }
-    function contactToHouse() {
-        chart2.updateData(chart.getData());
-    }
-    */
+<p>
+  Number of all customer:<br>
+  <%= @numberOfAllCust %>
+</p>
+
+
+
+<%= column_chart @data %>
+<%= pie_chart @correctPredictNoWithLowConf %>
+
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+
+
+<script>
+    $(function () {
+        var chart;
+
+        $(document).ready(function () {
+            chart = new Highcharts.chart('confidenceNoAll', {
+
+                title: {
+                    text: 'Confidence of NO Vs. Number of Customers'
+                },
+                xAxis: {
+                    categories: [
+
+                        <% @confidenceNoLogistic.each do |row|%>
+                        <%= row.confidence_no %>,
+                        <% end %>
+
+                    ],
+                },
+
+                yAxis: {
+                    title: {
+                        text: 'Number of Customers'
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+
+                plotOptions: {
+                    series: {
+                        label: {
+                            connectorAllowed: false
+                        },
+
+                    }
+                },
+
+                series: [{
+                    name: 'Logistic Regression',
+                    data: [
+                        <% @confidenceNoLogistic.each do |row|%>
+                        // {
+
+                        <%= row.user_count %>,
+                        // },
+                        <% end %>
+                    ]
+                },{
+                    name: 'Decision Tree',
+                    data: [
+                        <% @confidenceNoDecisionTree.each do |row|%>
+                        // {
+
+                        <%= row.user_count %>,
+                        // },
+                        <% end %>
+                    ]
+                }, {
+                    name: 'SVM',
+                    data: [
+                        <% @confidenceNoSVM.each do |row|%>
+                        // {
+
+                        <%= row.user_count %>,
+                        // },
+                        <% end %>
+                    ]
+                }, {
+                    name: 'Deep Learning',
+                    data: [
+                        <% @confidenceNoDeepLearning.each do |row|%>
+                        // {
+
+                        <%= row.user_count %>,
+                        // },
+                        <% end %>
+                    ]
+                }
+                ],
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
+                        }
+                    }]
+                }
+
+            });
+        });
+
+    });
 </script>
 
-<%= button_tag "houseToContact", :onclick => "houseToContact()" %>
-<%= button_tag "contactToHouse", :onclick => "contactToHouse()" %>
-
-<div class="container">
-  <div class="row justify-content-start">
-    <div class="col">
-      <%= line_chart @ageData, title: "Age", xtitle: "Range (age)", ytitle: "Number of Records", width: "700px", height: "300px" %>
-    </div>
-    <div class="col">
-      <%= pie_chart @housing, :title => "Housing", donut: true, width: "300px", height: "300px", id: 'hs' %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <%= pie_chart @contact, :title => "Contact", donut: true, width: "300px", height: "500px", id: 'cs' %>
-    </div>
-    <div class="col">
-      <%= column_chart @education, :title => "Education", xtitle: "Degree of education", ytitle: "Number of Records", donut: true, width: "700px", height: "500px" %>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <%= bar_chart @job, :title => "Occupation", xtitle: "Number of records", ytitle: "Job", width: "300px", height: "500px" %>
-    </div>
-    <div class="col">
-      <%= bar_chart @loan, :title => "Loan", xtitle: "Number of records", ytitle: "Has personal loan?", width: "300px", height: "500px" %>
-    </div>
-    <div class="col">
-      <%= column_chart @marital, :title => "Marital", xtitle: "Marital status", ytitle: "Number of records", width: "300px", height: "500px"%>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <%= scatter_chart @duration, :title => "Duration", xtitle: "Second", ytitle: "Number of records", width: "1000px", height: "500px" %>
-    </div>
-  </div>
-</div>
-
+<div id="confidenceNoAll"></div>

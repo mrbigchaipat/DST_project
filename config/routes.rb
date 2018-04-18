@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   get 'dashboard/non_potential'
 
+  get 'dashboard/comparison'
+
   get 'dashboard/enquiry'
   post 'dashboard/query'
 

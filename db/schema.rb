@@ -20,6 +20,11 @@ ActiveRecord::Schema.define(version: 20180417133054) do
     t.integer "user_count"
   end
 
+  create_table "datasets", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "decision_tree", id: false, force: :cascade do |t|
     t.integer "age"
     t.text "job"

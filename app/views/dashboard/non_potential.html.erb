@@ -4,9 +4,10 @@
     <a class="navbar-brand" href="#">DST Project</a>
   </div>
   <ul class="navbar-nav mr-auto">
-    <li class="nav-item active"><%= link_to 'Data Overview', dashboard_index_path, :method => :get, class: "nav-link" %></li>
+    <li><%= link_to 'Data Overview', dashboard_index_path, :method => :get, class: "nav-link" %></li>
+    <li><%= link_to 'Model Comparison', dashboard_comparison_path, :method => :get, class: "nav-link" %></li>
     <li><%= link_to 'Potential Customer', dashboard_logistic_regression_path, :method => :get, class: "nav-link" %></li>
-    <li><%= link_to 'Non Potential Customer', dashboard_non_potential_path, :method => :get, class: "nav-link" %></li>
+    <li class="nav-item active"><%= link_to 'Non Potential Customer', dashboard_non_potential_path, :method => :get, class: "nav-link" %></li>
     <li><%= link_to 'Logistic Regression', lr_result_path, :method => :get, class: "nav-link" %></li>
     <li><%= link_to 'Support Vector Machine', svm_result_path, :method => :get, class: "nav-link" %></li>
     <li><%= link_to 'Decision Tree', dt_result_path, :method => :get, class: "nav-link" %></li>
@@ -14,33 +15,6 @@
   </ul>
 </nav>
 
-<!--<div class="jumbotron">
-  <h1>Identify Potential Customers by Logistic Regression</h1>
-  <p>The data is related with direct marketing campaigns of a Portuguese banking institution.
-    The marketing campaigns were based on phone calls. Often, more than one contact to the same client was required,
-    in order to access if the product (bank term deposit) would be ('yes') or not ('no') subscribed. </p>
-</div>
--->
-
-<script>
-    var chart = Chartkick.charts["hs"];
-    var chart2 = Chartkick.charts["cs"];
-
-    function houseToContact() {
-        var chart = Chartkick.charts["hs"];
-        var chart2 = Chartkick.charts["cs"];
-        var x = [["no", 500], ["unknown", 990], ["yes", 21576]];
-        console.log(<%= @ageData %>);
-        console.log(chart.getData());
-        chart.updateData(x);
-    }
-    function contactToHouse() {
-        chart2.updateData(chart.getData());
-    }
-</script>
-
-<%= button_tag "houseToContact", :onclick => "houseToContact()" %>
-<%= button_tag "contactToHouse", :onclick => "contactToHouse()" %>
 
 <div class="container">
   <div class="row justify-content-start">

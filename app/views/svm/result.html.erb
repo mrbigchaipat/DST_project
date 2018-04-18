@@ -5,6 +5,9 @@
   </div>
   <ul class="navbar-nav mr-auto">
     <li><%= link_to 'Data Overview', dashboard_index_path, :method => :get, class: "nav-link" %></li>
+    <li><%= link_to 'Model Comparison', dashboard_comparison_path, :method => :get, class: "nav-link" %></li>
+    <li><%= link_to 'Potential Customer', dashboard_logistic_regression_path, :method => :get, class: "nav-link" %></li>
+    <li><%= link_to 'Non Potential Customer', dashboard_non_potential_path, :method => :get, class: "nav-link" %></li>
     <li><%= link_to 'Logistic Regression', lr_result_path, :method => :get, class: "nav-link" %></li>
     <li class="nav-item active"><%= link_to 'Support Vector Machine', svm_result_path, :method => :get, class: "nav-link" %></li>
     <li><%= link_to 'Decision Tree', dt_result_path, :method => :get, class: "nav-link" %></li>
@@ -13,5 +16,128 @@
 </nav>
 
 
-<h1>Svm#result</h1>
-<p>Find me in app/views/svm/result.html.erb</p>
+<p><h2>Overall statistics of Decision Tree model</h2></p>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+
+<script>
+    $(function () {
+        var chart;
+        $(document).ready(function () {
+            chart = new Highcharts.Chart({
+                chart: {
+                    renderTo: 'overall_stats',
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Overall Stats'
+                },
+
+                xAxis: {
+                    categories: [""],
+                    //type: 'category',
+                    labels: {
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Percentage'
+                    }
+                },
+
+
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.6,
+                        borderWidth: 0.5
+                    },
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y:f}'
+                        },
+                        groupPadding: 0.2
+                    }
+                },
+
+
+                series: [
+
+                    {
+                        name: ['Accuracy'],
+                        data: [<%= @accuracy %>]
+                    }, {
+                        name: ['Sensitivity'],
+                        data: [<%= @sensitivity %>]
+                    }, {
+                        name: ['Specificity'],
+                        data: [<%= @specificity %>]
+                    }, {
+                        name: ['Precision(Yes)'],
+                        data: [<%= @predicted_yes_precision %>]
+                    }, {
+                        name: ['Precision(No)'],
+                        data: [<%= @predicted_no_precision %>]
+                    },
+
+                ],
+
+            });
+        });
+
+    });
+</script>
+
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="row">
+    <div class="col">
+      <div id="overall_stats" style="min-width: 600px; height: 400px; margin: 0 auto"></div>
+    </div>
+    <div class="col">
+      <p>
+      <h3>Confusion Matrix</h3>
+      <table class="table table-bordered table-sm">
+        <div class="nav-item active">
+          <thead>
+          <tr>
+            <th></th>
+            <th scope="col">True No</th>
+            <th scope="col">True Yes</th>
+            <th scope="col">Class Precision</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr>
+            <th scope="row">Predicted No</td>
+            <td><%= @numTrueNegative %></td>
+            <td><%= @numFalseNegative %></td>
+            <th scope="row"><%= @predicted_no_precision %> %</td>
+          </tr>
+          <tr>
+            <th scope="row">Predicted Yes</td>
+            <td><%= @numFalsePositive %></td>
+            <td><%= @numTruePositive %></td>
+            <th scope="row"><%= @predicted_yes_precision %> %</td>
+          </tr>
+          <tr>
+            <th scope="row">Class Recall</td>
+            <th scope="row"><%= @true_no_recall %> %</td>
+            <th scope="row"><%= @true_yes_recall %> %</td>
+            <td></td>
+          </tr>
+
+          </tbody>
+        </div>
+      </table>
+      </p>
+    </div>
+  </div>
+</div>

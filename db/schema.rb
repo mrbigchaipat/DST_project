@@ -10,14 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180417133054) do
+ActiveRecord::Schema.define(version: 20180418152946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "bkup", id: false, force: :cascade do |t|
+    t.float "confidence_no"
+    t.integer "user_count"
+  end
+
   create_table "confidence_helper", id: false, force: :cascade do |t|
     t.float "confidence_no"
     t.integer "user_count"
+  end
+
+  create_table "dataset", id: false, force: :cascade do |t|
+    t.integer "age"
+    t.text "job"
+    t.text "marital"
+    t.text "education"
+    t.text "default"
+    t.text "housing"
+    t.text "loan"
+    t.text "contact"
+    t.text "month"
+    t.text "day_of_week"
+    t.integer "duration"
+    t.integer "campaign"
+    t.integer "pdays"
+    t.integer "previous"
+    t.text "poutcome"
+    t.float "emp.var.rate"
+    t.float "cons.price.idx"
+    t.float "cons.conf.idx"
+    t.float "euribor3m"
+    t.integer "nr.employed"
+    t.text "y"
   end
 
   create_table "datasets", force: :cascade do |t|

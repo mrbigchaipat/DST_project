@@ -10,12 +10,74 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180416120528) do
+ActiveRecord::Schema.define(version: 20180417143155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "dataset", id: false, force: :cascade do |t|
+    t.integer "age"
+    t.text "job"
+    t.text "marital"
+    t.text "education"
+    t.text "default"
+    t.text "housing"
+    t.text "loan"
+    t.text "contact"
+    t.text "month"
+    t.text "day_of_week"
+    t.integer "duration"
+    t.integer "campaign"
+    t.integer "pdays"
+    t.integer "previous"
+    t.text "poutcome"
+    t.float "emp.var.rate"
+    t.float "cons.price.idx"
+    t.float "cons.conf.idx"
+    t.float "euribor3m"
+    t.integer "nr.employed"
+    t.text "y"
+  end
+
+  create_table "datasets", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "logistic", id: false, force: :cascade do |t|
+    t.integer "age"
+    t.text "job"
+    t.text "marital"
+    t.text "education"
+    t.text "default"
+    t.text "housing"
+    t.text "loan"
+    t.text "contact"
+    t.text "month"
+    t.text "day_of_week"
+    t.integer "campaign"
+    t.integer "pdays"
+    t.integer "previous"
+    t.text "poutcome"
+    t.float "emp_var_rate"
+    t.float "cons_price_idx"
+    t.float "cons_conf_idx"
+    t.float "euribor3m"
+    t.integer "nr_employed"
+    t.text "y"
+    t.float "confidence_no"
+    t.float "confidence_yes"
+    t.text "prediction_y"
+  end
+
   create_table "logistics", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "queryobjs", force: :cascade do |t|
+    t.float "lower_range"
+    t.float "upper_range"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

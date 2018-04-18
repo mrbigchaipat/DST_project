@@ -7,6 +7,13 @@ Rails.application.routes.draw do
 
   get 'lr/result'
 
+  get 'dashboard/logistic_regression'
+
+  get 'dashboard/non_potential'
+
+  get 'dashboard/enquiry'
+  post 'dashboard/query'
+
   devise_for :users
   get 'dashboard/index'
   root 'dashboard#index'

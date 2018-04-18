@@ -15,31 +15,28 @@
 </nav>
 
 <!--<div class="jumbotron">
-  <h1>Data Set Information:</h1>
+  <h1>Identify Potential Customers by Logistic Regression</h1>
   <p>The data is related with direct marketing campaigns of a Portuguese banking institution.
     The marketing campaigns were based on phone calls. Often, more than one contact to the same client was required,
     in order to access if the product (bank term deposit) would be ('yes') or not ('no') subscribed. </p>
 </div>
 -->
 
-
-<script type="text/javascript">
-    var data = <%= @ageData.to_s %>;
-    console.log(data)
-    /*var chart2 = Chartkick.charts["cs"];
-    console.log(data);
+<script>
+    var chart = Chartkick.charts["hs"];
+    var chart2 = Chartkick.charts["cs"];
 
     function houseToContact() {
         var chart = Chartkick.charts["hs"];
         var chart2 = Chartkick.charts["cs"];
         var x = [["no", 500], ["unknown", 990], ["yes", 21576]];
+        console.log(<%= @ageData %>);
         console.log(chart.getData());
         chart.updateData(x);
     }
     function contactToHouse() {
         chart2.updateData(chart.getData());
     }
-    */
 </script>
 
 <%= button_tag "houseToContact", :onclick => "houseToContact()" %>
@@ -71,11 +68,6 @@
     </div>
     <div class="col">
       <%= column_chart @marital, :title => "Marital", xtitle: "Marital status", ytitle: "Number of records", width: "300px", height: "500px"%>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <%= scatter_chart @duration, :title => "Duration", xtitle: "Second", ytitle: "Number of records", width: "1000px", height: "500px" %>
     </div>
   </div>
 </div>

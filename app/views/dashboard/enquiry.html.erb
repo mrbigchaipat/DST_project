@@ -1,0 +1,7 @@
+<%= form_for :query, url: dashboard_query_path do |form| %>
+  <%= form.number_field :lower_bound, :step => 0.01 %>
+  <%= form.number_field :upper_bound, :step => 0.01 %>
+  <%= form.submit "Submit"  %>
+<% end  %>
+
+<%= params[:data] %>
